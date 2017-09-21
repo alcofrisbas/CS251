@@ -40,8 +40,13 @@
 
 (define lazy-filter
   (lambda (predicate llst)
-    #t))
+    (lazy-filter-helper predicate llst '())))
 
+(define lazy-filter-helper
+  (lambda (predicate llst predList)
+    (cond ((null? llst) (lst-to-llst predList))
+          ((not (predicate (car llst))) (lazy-filter-helper predicate ((cdr llst)) predList))
+          (else (lazy-filter-helper predicate ((cdr llst)) (append predList (list (car llst))))))))
 ;(define lazy-range
 ;  (lambda (a b)
 ;    (if (> a b)
