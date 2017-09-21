@@ -27,8 +27,8 @@
 (define lazy-add
   (lambda (llst1 llst2)
     (lazy-add-helper llst1 llst2 '())))
-;make addlist into a lazyList: done
-;zero-pad:
+
+;zero-pad: NEED TO ZERO PAD!!
 (define lazy-add-helper
   (lambda (llst1 llst2 addList)
     (if (and (null? llst1)
@@ -45,14 +45,12 @@
 (define lazy-filter-helper
   (lambda (predicate llst predList)
     (cond ((null? llst) (lst-to-llst predList))
-          ((not (predicate (car llst))) (lazy-filter-helper predicate ((cdr llst)) predList))
-          (else (lazy-filter-helper predicate ((cdr llst)) (append predList (list (car llst))))))))
-;(define lazy-range
-;  (lambda (a b)
-;    (if (> a b)
-;        '()
-;        (cons a
-;              (lambda () (lazy-range (+ a 1) b))))))
+          ((not (predicate (car llst))) (lazy-filter-helper predicate
+                                                            ((cdr llst))
+                                                            spredList))
+          (else (lazy-filter-helper predicate
+                                    ((cdr llst))
+                                    (append predList (list (car llst))))))))
 
 (define lst-to-llst
   (lambda (lst)
@@ -62,6 +60,7 @@
               (lambda () (lst-to-llst (cdr lst)))))))
 
 (check-equal? (first-n (lazy-list 1) 5) '(1 2 3 4 5))
+
 (check-equal? (nth (lazy-list 1) 0) 1)
 (check-equal? (nth (lazy-list 1) 1) 2)
 
