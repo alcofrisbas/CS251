@@ -62,7 +62,7 @@
                                 (append addlist (list(+ (car llst1) 0)))))
               (else (lazy-add-helper ((cdr llst1))
                                      ((cdr llst2))
-                                     (append addlist (list(+ (car llst1) (car llst2))))))))))
+                                     (append ad(lazy-filter (lambda (x) (= (modulo x 2) 0)) nums)dlist (list(+ (car llst1) (car llst2))))))))))
 
 ;; Returns a lazy list containing
 ;; all the values in the given lazy list
@@ -75,15 +75,16 @@
 ;; again does all the work with
 ;; little to no credit.
 ;; we need a auxiliary method appreciation day.
-(define lazy-filter-helper
-  (lambda (predicate llst predList)
-    (cond ((null? llst) (lst-to-llst predList))
-          ((not (predicate (car llst))) (lazy-filter-helper predicate
-                                                            ((cdr llst))
-                                                            predList))
-          (else (lazy-filter-helper predicate
-                                    ((cdr llst))
-                                    (append predList (list (car llst))))))))
+(define lazy-filter
+  (lambda (predicate llst)
+    (cond ((not (predicate (car llst))) (lazy-filter predicate ((cdr llst))))
+                                         
+          (else (cons (car llst)
+                      (lambda () (lazy-filter predicate ((cdr llst)))))))))
+
+(lazy-filter (lambda (x) (= (modulo x 2) 0)) (lazy-infinite-range 1))
+(first-n (lazy-filter (lambda (x) (= (modulo x 2) 0)) (lazy-infinite-range 1)) 5)
+;(lazy-filter-helper (lambda (x) (> 0 x)) (lazy-infinite-range 1))
 
 ;; converts a list to a lazy list
 ;; great for testing and returning
@@ -95,14 +96,11 @@
         (cons (car lst)
               (lambda () (lst-to-llst (cdr lst)))))))
 
-;; unit tests
-(check-equal? (first-n (lazy-infinite-range 1) 5) '(1 2 3 4 5))
 
-(check-equal? (nth (lazy-infinite-range 1) 0) 1)
-(check-equal? (nth (lazy-infinite-range 1) 1) 2)
-; challenging to check for lazy list equality,
-; so I'm checking for the equality of the second value.
-(check-equal? (car ((cdr (lazy-add (lazy-range 1 3) '())))) (car ((cdr(lazy-range 1 3)))))
-
-(check-equal? (car ((cdr (lazy-filter (lambda (x) (= (modulo x 5) 3)) (lazy-range 9 30))))) (car ((cdr(lst-to-llst '(13 18 23 28))))))
+(define lazy-range
+  (lambda (a b)
+    (if (> a b)
+        '()
+        (cons a
+              (lambda () (lazy-range (+ a 1) b))))))
 
