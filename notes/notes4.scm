@@ -41,4 +41,11 @@
 
 (define filter
   (lambda (f lst)
-    (map f lst)))
+    (if (null? lst)
+        '()
+        (if (f (car lst))
+            (cons (car lst)
+                  (filter f (cdr lst)))
+            (filter f (cdr lst))))))
+
+(filter (lambda (x) (< x 3)) nums)
