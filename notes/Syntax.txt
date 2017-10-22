@@ -1,0 +1,41 @@
+Syntax:
+
+Tasks:
+	1: specify syntax
+		regular expressions/context free grammar
+	2: take written code and check its syntax
+		tokenizer/parser
+
+Token Types:
+	identifier
+	numbers
+	punctuator
+
+
+Positive Integer representation:
+
+non-zero digit :- 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+
+digit :- 0 | non-zero-digit
+
+positive int :- non-zero-digit digit*
+
+in regexp no recursion
+
+if we allow "recursion", we get context free grammars
+
+ex1 <id-list> -> id (, id)*
+
+or: <id-list> -> id <id-tail>*
+
+<id-tail> -> , id <id-tail> | E
+
+or: <id-list> -> id <id-tail>
+
+
+<expr> -> id | number | "(" <expr> ")" | <expr> <op> <expr>
+
+<op> -> + | - | * | /
+
+parse tree
+

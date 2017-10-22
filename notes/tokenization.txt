@@ -1,0 +1,72 @@
+Sketch of an interpreter:
+
+token types: [keyword], identifier, 
+             |
+              -> spellings
+
+character string --> [tokenizer] --> string of tokens -->  [parser] --> parse tree --> code
+                     |
+                      -> strip out comments
+                     |
+                      -> break input into tokens
+                     |
+                      -> tag each token with its type
+
+Big question:
+How does the tokenizer tokenize?
+Scheme is easy... spaces and parens
+Otherwise, it could be quite "opaque"-jed
+
+Toy example:
+
+THink (python, java, or C)
+
+in: -3.14-var
+concept: lookahead if "-_" is digit, then '-'is a negativizer
+                   else: '-' is an <addop>
+
+
+Scheme Tokens:
+
+req-open
+    open parens
+req-close
+    close parens
+req-identifier
+req-number
+req-boolean
+    # sign if lookahead is 't' or 'f'
+req-string
+opt-(quote __)
+not-character
+    not needed to be handled
+not-"`"backtick
+not-,
+not-,@
+not-.
+not-#(
+
+
+
+numbers in scheme:
+
+- [0-9]+ | <decimal> | - [0-9]+/[0-9]+
+
+
+rework decimal case:
+works:  _.
+        ._
+not works:
+        .
+
+<decimal> ::= (ε|-|+) ( [0-9]*.[0-9]+ | [0-9]+.[0-9]* )
+
+keep a tally of digits and dots:
+
+if 0 digits and 1 dot:
+    bad
+if 1 digit and 1 slash:
+    bad
+if > 1 dots:
+    bad
+

@@ -1,0 +1,66 @@
+toy example:
+<expr> -> id | num | "(" <expr> ")" | <expr> <addop> <expr>
+<op> -> + | - | * | /
+
+2 * 3 + 4 * 5
+
+50 = ((2 * 3) + 4) * 5
+-----------------------
+<expr> -> <expr> <op> <term> | <term>
+<term> -> id | number | "(" <expr> ")"
+<op> + | - | * | /
+
+26 = (2 * 3) + (4 * 5)
+----------------------
+<expr> -> <add-op> <term> | <term>
+<term> -> <term> <mult-op> <factor> | <factor>
+<factor> -> id | number | "(" <expr> ")"
+
+<add-op> -> + | -
+<mult-op> -> * |/
+
+
+70 = 2 * (3 + 4) * 5
+---------------------
+
+
+
+
+
+
+
+SHIFT REDUCE PARSING
+--------------------
+join partially constructed trees?
+<term>
+/ | \
+2 * 3
++
+<term>
+/ | \
+4 * 5
+
+=    <expr>
+     / | \
+<term> | <term>
+/ | \  | / | \
+2 * 3  + 4 * 5
+
+step 0: Init empty stack
+step 1: shift a token(leftmost) to the stack(push)
+step 2: if last "few" things on stack "look like" RHS
+        of a production, REDUCE them to LHS
+        TO REDUCE: pop off stack then push reduced item onto stack
+step 3: repeat until done.
+
+replacement is rightmost.
+
+LR Grammar
+left to Right
+right most derivation
+
+LL Grammar:
+left to right,
+left most derivation
+
+CFL - context free language

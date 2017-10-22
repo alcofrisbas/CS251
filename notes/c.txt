@@ -1,0 +1,31 @@
+Reasons to Study C:
+
+1: fairly low level
+    learning other language
+
+2: No garbage collection
+    manual management
+    understand computers
+
+3: not OOL
+    appreciation of other languages
+
+
+C is a very Big Language...
+
+Assignment: 
+x = 23
+y = x
+
+Questions:
+
+what happens semantically when we assign things?
+what's valid to assign or to be assigned to?
+how these interact with design and implementation choices.
+
+Assignment mode 1 reference model:
+
+-each variable references some Thing in memory Somewhere.
+-assignment changes Reference make LHS refer to the same
+as RHS.
+-"Reference" ADT implemented with Pointers.

@@ -1,0 +1,29 @@
+memory allocation:
+-static: absolute address
+-stack: allocated LIFO
+    -usually allocated when variable is fisrt declared or used
+    -often de-allocated when variable goes out of scope
+    -often for local variables in functions and parameter passing
+-heap: not bound
+    -not bound to structure of the code
+    -in java: new __
+    -in java: calling constructors
+    -in C   : malloc()
+
+
+-stack
+    close together
+    automatic
+    limit size
+-heap
+    more space
+-static
+    constants
+    globals
+    functions with vars that retain
+    between calls -- count function (static int x = 0;)
+
+
+
+
+array[2] \eqiv (*((array)+(2)))
